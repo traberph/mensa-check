@@ -33,6 +33,27 @@
             max-width: 1000px;
         }
 
+        .nav-links {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 2vh;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
         footer {
             position: fixed;
             bottom: 0;
@@ -60,12 +81,38 @@
 </head>
 
 <body>
+    
+    <div class="nav-links">
+        <a href="/">Today</a>
+        <a href="/weekly">Weekly</a>
+    </div>
+
     <h1>👮</h1>
     <h1 style="margin-bottom: 30px;">Spätzle Check:</h1>
     <div>
         {{ text }}
     </div>
     <div>{{emoji}}</div>
+
+    {% if week %}
+    <h2 style="margin-top:40px;">Weekly Spätzle Overview</h2>
+    <div style="max-height: 300px; overflow-y: auto; margin: 0 auto;">
+        <table style="margin: 0 auto; border-collapse: collapse; font-size:2vh;">
+            <tr>
+                <th style="padding: 8px; background-color: rgba(255,255,255,0.2);">Day</th>
+                <th style="padding: 8px; background-color: rgba(255,255,255,0.2);">Status</th>
+                <th style="padding: 8px; background-color: rgba(255,255,255,0.2);">Emoji</th>
+            </tr>
+            {% for day in week %}
+            <tr style="background-color: {{ day.color }}; color: #fff;">
+                <td style="padding: 8px;">{{ day.day }}</td>
+                <td style="padding: 8px;">{{ day.text }}</td>
+                <td style="padding: 8px; font-size: 2em;">{{ day.emoji }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
 
     <footer>
         <p>Powered by:
